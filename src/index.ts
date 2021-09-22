@@ -9,7 +9,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 app.use(akinator)
-// app.use(apiHookRout)
+app.use(apiHookRout)
 
 app.listen(PORT, () => {
     console.log('server started on port ', PORT)

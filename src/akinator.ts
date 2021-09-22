@@ -22,14 +22,19 @@ export const nextStep = async (aki: Akinator, answer: AnswerType) => {
     console.log('firstGuess:', aki.answers);
   }
 }
-export const checkWin = async (aki: Akinator) => {
+export const checkWin = async (aki: Akinator, wrongPersonId: string | undefined) => {
   console.log('currentStep', aki.currentStep)
   console.log('progress', aki.progress)
   console.log('guessCount', aki.guessCount)
-  if (aki.progress > 70){
-    let win = await aki.win()
+  console.log('\n')
+  if (aki.progress > 85 || aki.currentStep >= 50){
+    await aki.win()
     console.log('win')
-    console.log('firstGuess:', aki.answers);
+    // console.log('firstGuess:', aki.answers);
+    //@ts-ignore
+    if (aki.answers[0].id === wrongPersonId){
+      return false
+    }
     return true
   }
   return false

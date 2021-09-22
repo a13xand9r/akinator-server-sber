@@ -1,4 +1,4 @@
-import { runAppHandler, noMatchHandler, startGameHandler, userAnswerHandler } from './handlers';
+import { runAppHandler, noMatchHandler, startGameHandler, userAnswerHandler, goBackHandler, wrongGuessHandler, finishGameHandler } from './handlers';
 import {
   createIntents,
   createMatchers,
@@ -31,6 +31,24 @@ const userScenario = createUserScenario({
       return action('USER_ANSWER')(req)// || intent(...)
     },
     handle: userAnswerHandler
+  },
+  goBack: {
+    match: (req) => {
+      return action('GO_BACK')(req)// || intent(...)
+    },
+    handle: goBackHandler
+  },
+  wrongGuess: {
+    match: (req) => {
+      return action('WRONG_GUESS')(req)// || intent(...)
+    },
+    handle: wrongGuessHandler
+  },
+  finishGame: {
+    match: (req) => {
+      return action('FINISH_GAME')(req)// || intent(...)
+    },
+    handle: finishGameHandler
   },
 })
 
