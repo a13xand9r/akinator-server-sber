@@ -1,8 +1,7 @@
 import Akinator from 'aki-api/typings/src/Akinator';
 import { SaluteHandler } from '@salutejs/scenario'
-import { checkWin, runAkinator } from './akinator'
+import { checkWin, nextStep, runAkinator } from './akinator'
 import { AnswerType } from './types';
-import { guess } from 'aki-api/typings/src/functions';
 import { getRandomFromArray } from './utils/utils';
 
 export const runAppHandler: SaluteHandler = ({ res }) => {
@@ -37,7 +36,8 @@ export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) =>
   const { answer } = req.serverAction?.payload as { answer: AnswerType }
   const aki = session.aki as Akinator
 
-  await aki.step(answer)
+  console.log('stepHandler')
+  await nextStep(aki, answer)
   const isWin = await checkWin(aki, session.wrongPersonId as string | undefined)
 
   if (!isWin) {

@@ -1,5 +1,6 @@
 import { Aki } from 'aki-api'
 import Akinator from 'aki-api/typings/src/Akinator';
+import { AnswerType } from './types';
 
 export const runAkinator = async () => {
     const region = 'ru';
@@ -9,6 +10,14 @@ export const runAkinator = async () => {
     await aki.start();
 
     return aki
+}
+
+export const nextStep = async (aki: Akinator, answer: AnswerType) => {
+  try {
+    await aki.step(answer)
+  } catch (error) {
+    console.log('nextStepError', error)
+  }
 }
 
 export const checkWin = async (aki: Akinator, wrongPersonId: string | undefined) => {
