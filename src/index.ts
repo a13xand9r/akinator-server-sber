@@ -12,6 +12,9 @@ app.use(akinator)
 app.use(apiHookRout)
 
 app.listen(PORT, () => {
-    console.log('server started on port ', PORT)
-    // createIntentsJSON()
+  console.log('server started on port ', PORT)
+})
+
+app.get('/', (_, res) => {
+  res.status(200).send('Akinator server App')
 })

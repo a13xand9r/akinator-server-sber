@@ -34,10 +34,8 @@ export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) =>
   const { answer } = req.serverAction?.payload as { answer: AnswerType }
   const aki = session.aki as Akinator
 
-  console.log('answer', answer)
   await aki.step(answer)
   const isWin = await checkWin(aki, session.wrongPersonId as string | undefined)
-  // console.log('answers', aki.answers)
 
   if (!isWin) {
     res.appendCommand({
@@ -86,9 +84,6 @@ export const goBackHandler: SaluteHandler = async ({ res, session }) => {
 
 export const wrongGuessHandler: SaluteHandler = async ({ res, session }) => {
   const aki = session.aki as Akinator
-
-  console.log('question', aki.question)
-  console.log('answers', aki.answers)
 
   //@ts-ignore
   session.wrongPersonId = aki.answers[0].id
