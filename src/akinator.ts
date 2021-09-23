@@ -3,7 +3,7 @@ import Akinator from 'aki-api/typings/src/Akinator';
 import { AnswerType } from './types';
 
 export const runAkinator = async () => {
-  const region = 'ru';
+  const region = 'en';
   const childMode = false
   const aki = new Aki({ region, childMode });
   try {
