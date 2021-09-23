@@ -2,7 +2,7 @@ import Akinator from 'aki-api/typings/src/Akinator';
 import { SaluteHandler } from '@salutejs/scenario'
 import { checkWin, nextStep, runAkinator } from './akinator'
 import { AnswerType } from './types';
-import { getRandomFromArray } from './utils/utils';
+import { getRandomFromArray, translateFromEnToRu } from './utils/utils';
 
 export const runAppHandler: SaluteHandler = ({ res }) => {
   res.setPronounceText('начнем')
@@ -20,16 +20,18 @@ export const startGameHandler: SaluteHandler = async ({ res, session }) => {
   console.log('question', aki.question)
   console.log('answers', aki.answers)
 
+  const question = await translateFromEnToRu(aki.question as string)
+
   res.appendCommand({
     type: 'NEW_QUESTION',
-    question: aki.question,
+    question,
     answers: aki.answers,
     currentStep: aki.currentStep
   })
   res.appendCommand({
     type: 'START_GAME',
   })
-  res.setPronounceText(`Начнем игру! Первый вопрос: ${aki.question}`)
+  res.setPronounceText(`Начнем игру! Первый вопрос: ${question}`)
 }
 
 export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) => {
@@ -41,28 +43,33 @@ export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) =>
   const isWin = await checkWin(aki, session.wrongPersonId as string | undefined)
 
   if (!isWin) {
+    const question = await translateFromEnToRu(aki.question as string)
+
     res.appendCommand({
       type: 'NEW_QUESTION',
-      question: aki.question,
+      question,
       answers: aki.answers,
       progress: aki.progress,
       currentStep: aki.currentStep
     })
-    res.setPronounceText(`${aki.question}`)
+    res.setPronounceText(`${question}`)
   } else {
+    //@ts-ignore
+    const name = await translateFromEnToRu(aki.answers[0].name as string)
+    //@ts-ignore
+    const description = await translateFromEnToRu(aki.answers[0].description as string)
+
     res.appendCommand({
       type: 'WIN_PERSON',
       win: {
-        //@ts-ignore
-        name: aki.answers[0].name,
-        //@ts-ignore
-        description: aki.answers[0].description,
+        name,
+        description,
         //@ts-ignore
         picture: aki.answers[0].absolute_picture_path,
       }
     })
     //@ts-ignore
-    res.setPronounceText(`Кажется это ${aki.answers[0].name}`)
+    res.setPronounceText(`Кажется это ${name}`)
   }
 }
 
@@ -77,12 +84,12 @@ export const goBackHandler: SaluteHandler = async ({ res, session }) => {
   })
   res.appendCommand({
     type: 'NEW_QUESTION',
-    question: aki.question,
+    question: translateFromEnToRu(aki.question as string),
     answers: aki.answers,
     progress: aki.progress,
     currentStep: aki.currentStep
   })
-  res.setPronounceText(`${aki.question}`)
+  res.setPronounceText(`${translateFromEnToRu(aki.question as string)}`)
 }
 
 export const wrongGuessHandler: SaluteHandler = async ({ res, session }) => {
