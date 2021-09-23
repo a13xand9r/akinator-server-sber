@@ -7,6 +7,7 @@ export const runAkinator = async () => {
     const aki = new Aki({ region, childMode });
 
     await aki.start();
+
     return aki
 }
 

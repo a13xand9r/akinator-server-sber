@@ -18,6 +18,9 @@ export const startGameHandler: SaluteHandler = async ({ res, session }) => {
   session.aki = await runAkinator()
   const aki = session.aki as Akinator
 
+  console.log('question', aki.question)
+  console.log('answers', aki.answers)
+
   res.appendCommand({
     type: 'NEW_QUESTION',
     question: aki.question,
