@@ -1,9 +1,7 @@
 import { Router } from 'express'
 import { handleNlpRequest } from './scenario'
 
-export const akinator = Router()
 export const apiHookRout = Router()
-
 
 apiHookRout.post('/api/hook', async (req, res) => {
   console.log('api/hook request')
