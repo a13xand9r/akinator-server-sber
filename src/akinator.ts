@@ -3,11 +3,15 @@ import Akinator from 'aki-api/typings/src/Akinator';
 import { AnswerType } from './types';
 
 export const runAkinator = async () => {
-    const region = 'ru';
-    const childMode = false
-    const aki = new Aki({ region, childMode });
-
+  const region = 'ru';
+  const childMode = false
+  const aki = new Aki({ region, childMode });
+  try {
     await aki.start();
+  } catch (error) {
+    console.log('startAkinatorError', error)
+  }
+   
 
     return aki
 }
@@ -37,4 +41,4 @@ export const checkWin = async (aki: Akinator, wrongPersonId: string | undefined)
   return false
 }
 
-runAkinator().catch(console.error);
+// runAkinator().catch(console.error);
