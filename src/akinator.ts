@@ -11,9 +11,7 @@ export const runAkinator = async () => {
   } catch (error) {
     console.log('startAkinatorError', error)
   }
-   
-
-    return aki
+  return aki
 }
 
 export const nextStep = async (aki: Akinator, answer: AnswerType) => {
