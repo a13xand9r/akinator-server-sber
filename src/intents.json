@@ -1,0 +1,160 @@
+{
+  "intents": {
+    "/Играть": {
+      "matchers": [
+        {
+          "type": "phrase",
+          "rule": "Играть"
+        },
+        {
+          "type": "phrase",
+          "rule": "Давай"
+        },
+        {
+          "type": "phrase",
+          "rule": "play"
+        },
+        {
+          "type": "phrase",
+          "rule": "go"
+        }
+      ],
+      "variables": {}
+    },
+    "/Назад": {
+      "matchers": [
+        {
+          "type": "phrase",
+          "rule": "назад"
+        },
+        {
+          "type": "phrase",
+          "rule": "вернись"
+        },
+        {
+          "type": "phrase",
+          "rule": "back"
+        },
+        {
+          "type": "phrase",
+          "rule": "go back"
+        }
+      ],
+      "variables": {}
+    },
+    "/Ответ": {
+      "matchers": [
+        {
+          "type": "phrase",
+          "rule": "@answer"
+        }
+      ],
+      "variables": {
+        "answer": {
+          "required": true,
+          "questions": []
+        }
+      }
+    },
+    "/Закончить игру": {
+      "matchers": [
+        {
+          "type": "phrase",
+          "rule": "закончить игру"
+        },
+        {
+          "type": "phrase",
+          "rule": "finish"
+        },
+        {
+          "type": "phrase",
+          "rule": "finish game"
+        }
+      ],
+      "variables": {}
+    },
+    "/Продолжить": {
+      "matchers": [
+        {
+          "type": "phrase",
+          "rule": "продолжить"
+        },
+        {
+          "type": "phrase",
+          "rule": "неверно"
+        },
+        {
+          "type": "phrase",
+          "rule": "неправильно"
+        },
+        {
+          "type": "phrase",
+          "rule": "continue"
+        },
+        {
+          "type": "phrase",
+          "rule": "keep going"
+        },
+        {
+          "type": "phrase",
+          "rule": "wrong"
+        }
+      ],
+      "variables": {}
+    }
+  },
+  "entities": {
+    "answer": {
+      "noMorph": false,
+      "matchers": [
+        {
+          "type": "synonyms",
+          "rule": [
+            "Да",
+            "yes"
+          ],
+          "value": "{\nvalue: 0\n}"
+        },
+        {
+          "type": "synonyms",
+          "rule": [
+            "не знаю",
+            "don't know",
+            "do not know",
+            "I don't know",
+            "I do not know"
+          ],
+          "value": "{\nvalue: 2\n}"
+        },
+        {
+          "type": "synonyms",
+          "rule": [
+            "нет",
+            "no"
+          ],
+          "value": "{\nvalue: 1\n}"
+        },
+        {
+          "type": "synonyms",
+          "rule": [
+            "Возможно",
+            "скорее всего",
+            "частично",
+            "Probably"
+          ],
+          "value": "{\nvalue: 3\n}"
+        },
+        {
+          "type": "synonyms",
+          "rule": [
+            "скорее нет",
+            "probably not",
+            "скорее всего нет",
+            "наверное нет"
+          ],
+          "value": "{\nvalue: 4\n}"
+        }
+      ]
+    }
+  }
+}

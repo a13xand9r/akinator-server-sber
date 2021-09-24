@@ -44,10 +44,11 @@ export const startGameHandler: SaluteHandler = async ({ req, res, session }) => 
 
 export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) => {
   const { answer } = req.serverAction?.payload as { answer: AnswerType }
+  const value = Number(req.variables.value) as AnswerType
   const aki = session.aki as Akinator
 
   console.log('stepHandler')
-  await nextStep(aki, answer)
+  await nextStep(aki, value ? value : answer)
   const isWin = await checkWin(aki, session.wrongPersonId as string | undefined)
 
   if (!isWin) {
