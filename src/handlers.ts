@@ -39,7 +39,7 @@ export const startGameHandler: SaluteHandler = async ({ req, res, session }) => 
   res.appendCommand({
     type: 'START_GAME',
   })
-  res.setPronounceText(`Начнем игру! Первый вопрос: ${question}`)
+  res.setPronounceText(`Let's start! First question: ${question}`)
 }
 
 export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) => {
