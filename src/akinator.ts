@@ -4,7 +4,7 @@ import { AnswerType } from './types';
 
 export const runAkinator = async (region: region) => {
   const childMode = false
-  const aki = new Aki({ region, childMode, proxyOptions: 'http://46.229.187.169' });
+  const aki = new Aki({ region, childMode });
   try {
     await aki.start();
   } catch (error) {
