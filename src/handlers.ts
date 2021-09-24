@@ -3,6 +3,7 @@ import { SaluteHandler } from '@salutejs/scenario'
 import { checkWin, nextStep, runAkinator } from './akinator'
 import { AnswerType } from './types';
 import { getRandomFromArray, translateFromEnToRu } from './utils/utils';
+import { region } from 'aki-api';
 
 export const runAppHandler: SaluteHandler = ({ res }) => {
   res.setPronounceText('начнем')
@@ -14,13 +15,14 @@ export const noMatchHandler: SaluteHandler = ({ res }) => {
 }
 
 export const startGameHandler: SaluteHandler = async ({ res, session }) => {
-  session.aki = await runAkinator()
+  console.log('process', process.env.REGION)
+  session.aki = await runAkinator(process.env.REGION as region)
   const aki = session.aki as Akinator
 
   console.log('question', aki.question)
   console.log('answers', aki.answers)
 
-  const question = await translateFromEnToRu(aki.question as string)
+  const question = aki.question as string//await translateFromEnToRu(aki.question as string)
 
   res.appendCommand({
     type: 'NEW_QUESTION',
@@ -43,7 +45,7 @@ export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) =>
   const isWin = await checkWin(aki, session.wrongPersonId as string | undefined)
 
   if (!isWin) {
-    const question = await translateFromEnToRu(aki.question as string)
+    const question = aki.question as string//await translateFromEnToRu(aki.question as string)
 
     res.appendCommand({
       type: 'NEW_QUESTION',
@@ -55,9 +57,9 @@ export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) =>
     res.setPronounceText(`${question}`)
   } else {
     //@ts-ignore
-    const name = await translateFromEnToRu(aki.answers[0].name as string)
+    const name = aki.answers[0].name as string//await translateFromEnToRu(aki.answers[0].name as string)
     //@ts-ignore
-    const description = await translateFromEnToRu(aki.answers[0].description as string)
+    const description = aki.answers[0].description as string//await translateFromEnToRu(aki.answers[0].description as string)
 
     res.appendCommand({
       type: 'WIN_PERSON',
@@ -78,18 +80,20 @@ export const goBackHandler: SaluteHandler = async ({ res, session }) => {
 
   await aki.back()
 
+  const question = aki.question as string//await translateFromEnToRu(aki.question as string)
+
   res.appendCommand({
     type: 'WIN_PERSON',
     win: null
   })
   res.appendCommand({
     type: 'NEW_QUESTION',
-    question: translateFromEnToRu(aki.question as string),
+    question: question,
     answers: aki.answers,
     progress: aki.progress,
     currentStep: aki.currentStep
   })
-  res.setPronounceText(`${translateFromEnToRu(aki.question as string)}`)
+  res.setPronounceText(`${question}`)
 }
 
 export const wrongGuessHandler: SaluteHandler = async ({ res, session }) => {
@@ -98,17 +102,19 @@ export const wrongGuessHandler: SaluteHandler = async ({ res, session }) => {
   //@ts-ignore
   session.wrongPersonId = aki.answers[0].id
 
+  const question = aki.question
+
   res.appendCommand({
     type: 'WIN_PERSON',
     win: null
   })
   res.appendCommand({
     type: 'NEW_QUESTION',
-    question: aki.question,
+    question: question,
     answers: aki.answers,
     currentStep: aki.currentStep
   })
-  res.setPronounceText(`${aki.question}`)
+  res.setPronounceText(`${question}`)
 }
 
 export const finishGameHandler: SaluteHandler = async ({req, res, session }) => {

@@ -19,11 +19,15 @@
     "aki-api": "^6.0.8",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "google-translate-api": "^2.0.3",
+    "google-translate-free": "^2.4.5",
+    "translatte": "^3.0.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/google-translate-api": "^2.3.2",
     "@types/node": "^16.9.4",
     "nodemon": "^2.0.12",
     "ts-node": "^10.2.1",

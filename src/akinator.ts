@@ -1,9 +1,8 @@
-import { Aki } from 'aki-api'
+import { Aki, region } from 'aki-api'
 import Akinator from 'aki-api/typings/src/Akinator';
 import { AnswerType } from './types';
 
-export const runAkinator = async () => {
-  const region = 'en';
+export const runAkinator = async (region: region) => {
   const childMode = false
   const aki = new Aki({ region, childMode });
   try {
