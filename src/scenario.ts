@@ -1,5 +1,6 @@
 import { runAppHandler, noMatchHandler, startGameHandler, userAnswerHandler, goBackHandler, wrongGuessHandler, finishGameHandler } from './handlers';
 import {
+  AppState,
   createIntents,
   createMatchers,
   createSaluteRequest,

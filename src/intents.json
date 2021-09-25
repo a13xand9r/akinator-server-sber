@@ -122,7 +122,9 @@
             "don't know",
             "do not know",
             "I don't know",
-            "I do not know"
+            "I do not know",
+            "I dont know",
+            "dont know"
           ],
           "value": "{\nvalue: 2\n}"
         },

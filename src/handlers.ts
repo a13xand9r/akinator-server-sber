@@ -31,6 +31,7 @@ export const startGameHandler: SaluteHandler = async ({ req, res, session }) => 
   const question = aki.question as string//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
 
   res.setASRHints({words: ['no', 'yes', 'probably', 'probably not', 'don\'t know', 'do not know']})
+  res.setAutoListening(true)
   res.appendCommand({
     type: 'NEW_QUESTION',
     question,
@@ -44,17 +45,22 @@ export const startGameHandler: SaluteHandler = async ({ req, res, session }) => 
 }
 
 export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) => {
-  const { answer } = req.serverAction?.payload as { answer: AnswerType }
-  const value = Number(req.variables.value) as AnswerType
+  let answer: AnswerType =2
+  if (req.serverAction?.payload){
+    //@ts-ignore
+    answer = req.serverAction?.payload?.answer as AnswerType
+  }
+  console.log('variables',req.variables)
+  const value = Number(req.variables?.value) as AnswerType
   const aki = session.aki as Akinator
 
   console.log('stepHandler')
-  await nextStep(aki, value ? value : answer)
+  await nextStep(aki, value ?? answer)
   const isWin = await checkWin(aki, session.wrongPersonId as string | undefined)
 
   if (!isWin) {
     const question = aki.question as string//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
-
+    res.setAutoListening(true)
     res.appendCommand({
       type: 'NEW_QUESTION',
       question,
