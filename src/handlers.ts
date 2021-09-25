@@ -130,7 +130,11 @@ export const wrongGuessHandler: SaluteHandler = async ({ req, res, session }) =>
   session.wrongPersonId = aki.answers[0].id
 
   const question = aki.question//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
-  res.setASRHints({words: ['no', 'yes', 'probably', 'probably not', 'don\'t know', 'do not know', 'back']})
+  res.setASRHints({
+    model: 'media',
+    enable_letters: true,
+    words: ['no', 'yes', 'probably', 'probably not', 'dont know', 'don\'t know', 'do not know', 'back']
+  })
   res.appendCommand({
     type: 'WIN_PERSON',
     win: null
