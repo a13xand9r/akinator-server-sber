@@ -132,7 +132,8 @@
           "type": "synonyms",
           "rule": [
             "нет",
-            "no"
+            "no",
+            "но"
           ],
           "value": "{\nvalue: 1\n}"
         },

@@ -30,7 +30,11 @@ export const startGameHandler: SaluteHandler = async ({ req, res, session }) => 
 
   const question = aki.question as string//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
 
-  res.setASRHints({words: ['no', 'yes', 'probably', 'probably not', 'don\'t know', 'do not know']})
+  res.setASRHints({
+    model: 'media',
+    enable_letters: true,
+    words: ['no', 'yes', 'probably', 'probably not', 'dont know', 'don\'t know', 'do not know', 'back']
+  })
   res.setAutoListening(true)
   res.appendCommand({
     type: 'NEW_QUESTION',
@@ -69,7 +73,11 @@ export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) =>
       currentStep: aki.currentStep
     })
     res.setPronounceText(`${question}`)
-    res.setASRHints({words: ['no', 'yes', 'probably', 'probably not', 'don\'t know', 'do not know', 'back']})
+    res.setASRHints({
+      model: 'media',
+      enable_letters: true,
+      words: ['no', 'yes', 'probably', 'probably not', 'dont know', 'don\'t know', 'do not know', 'back']
+    })
   } else {
     //@ts-ignore
     const name = aki.answers[0].name as string//await translateFromEnToRu(aki.answers[0].name as string)
@@ -96,7 +104,11 @@ export const goBackHandler: SaluteHandler = async ({ req, res, session }) => {
   await aki.back()
 
   const question = aki.question as string//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
-  res.setASRHints({words: ['no', 'yes', 'probably', 'probably not', 'don\'t know', 'do not know', 'back']})
+  res.setASRHints({
+    model: 'media',
+    enable_letters: true,
+    words: ['no', 'yes', 'probably', 'probably not', 'dont know', 'don\'t know', 'do not know', 'back']
+  })
   res.appendCommand({
     type: 'WIN_PERSON',
     win: null
