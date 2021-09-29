@@ -2,7 +2,7 @@ import Akinator from 'aki-api/typings/src/Akinator';
 import { SaluteHandler } from '@salutejs/scenario'
 import { checkWin, nextStep, runAkinator } from './akinator'
 import { AnswerType } from './types';
-import { getRandomFromArray } from './utils/utils';
+import { fixSpellingMistakes, getRandomFromArray } from './utils/utils';
 import { region } from 'aki-api';
 
 export const runAppHandler: SaluteHandler = ({ req, res }) => {
@@ -28,7 +28,7 @@ export const startGameHandler: SaluteHandler = async ({ req, res, session }) => 
   console.log('question', aki.question)
   console.log('answers', aki.answers)
 
-  const question = aki.question as string//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
+  const question = fixSpellingMistakes(aki.question as string)//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
 
   res.setASRHints({
     model: 'media',
@@ -63,7 +63,7 @@ export const userAnswerHandler: SaluteHandler = async ({ req, res, session }) =>
   const isWin = await checkWin(aki, session.wrongPersonId as string | undefined)
 
   if (!isWin) {
-    const question = aki.question as string//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
+    const question = fixSpellingMistakes(aki.question as string)//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
     res.setAutoListening(true)
     res.appendCommand({
       type: 'NEW_QUESTION',
@@ -103,7 +103,7 @@ export const goBackHandler: SaluteHandler = async ({ req, res, session }) => {
 
   await aki.back()
 
-  const question = aki.question as string//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
+  const question = fixSpellingMistakes(aki.question as string)//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
   res.setASRHints({
     model: 'media',
     enable_letters: true,
@@ -129,7 +129,7 @@ export const wrongGuessHandler: SaluteHandler = async ({ req, res, session }) =>
   //@ts-ignore
   session.wrongPersonId = aki.answers[0].id
 
-  const question = aki.question//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
+  const question = fixSpellingMistakes(aki.question as string)//await translateFromEnToRu(aki.question as string, req.request.payload.character.appeal)
   res.setASRHints({
     model: 'media',
     enable_letters: true,

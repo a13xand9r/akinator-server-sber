@@ -76,9 +76,26 @@ function changeAppealText(text: string, appeal: Character["appeal"]): string{
   return newText
 }
 
+const spellingMistakes = {
+  'chararter': 'character'
+}
+
+export const fixSpellingMistakes = (text: string) => {
+  let newText: string = text
+  const keys = Object.keys(spellingMistakes)
+  keys.forEach((key) => {
+    if (text.toLowerCase().includes(key.toLowerCase())) {
+      //@ts-ignore
+      newText = text.replace(key, spellingMistakes[key])
+      //@ts-ignore
+      newText = newText.replace(key.toLowerCase(), spellingMistakes[key].toLowerCase())
+    }
+  })
+  return newText
+}
 
 /*спорные переводы:
-Is your character real? - 
+Is your character real? -
 Is your character a real person? - Ваш персонаж настоящий человек?
 Does your character have special powers? - Есть ли у вашего персонажа специальные силы?
 */
