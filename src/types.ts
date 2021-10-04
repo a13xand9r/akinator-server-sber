@@ -1,9 +1,9 @@
-import Akinator from 'aki-api/typings/src/Akinator';
 import {
   AppState,
   SaluteRequest,
   SaluteRequestVariable
 } from '@salutejs/scenario'
+import Akinator from './aki-api/Akinator'
 
 export type SessionType = {
   aki: Akinator
