@@ -10,6 +10,7 @@ export const runAkinator = async (region: region) => {
     console.log(aki.frontaddr, aki.uid)
   } catch (error) {
     console.log('startAkinatorError', error)
+    console.log(aki.frontaddr, aki.uid)
   }
   return aki
 }
