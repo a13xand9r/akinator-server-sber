@@ -1,5 +1,5 @@
-import { Aki, region } from 'aki-api'
-import Akinator from 'aki-api/typings/src/Akinator';
+import { Aki, region } from './aki-api';
+import Akinator from './aki-api/Akinator';
 import { AnswerType } from './types';
 
 export const runAkinator = async (region: region) => {

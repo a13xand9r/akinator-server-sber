@@ -1,9 +1,9 @@
-import Akinator from 'aki-api/typings/src/Akinator';
 import { SaluteHandler } from '@salutejs/scenario'
+import { region } from './aki-api';
+import Akinator from './aki-api/Akinator';
 import { checkWin, nextStep, runAkinator } from './akinator'
 import { AnswerType } from './types';
 import { fixSpellingMistakes, getRandomFromArray } from './utils/utils';
-import { region } from 'aki-api';
 
 export const runAppHandler: SaluteHandler = ({ req, res }) => {
   if (req.request.payload.character.appeal === 'official') {
