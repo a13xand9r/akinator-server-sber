@@ -7,6 +7,7 @@ export const runAkinator = async (region: region) => {
   const aki = new Aki({ region, childMode });
   try {
     await aki.start();
+    console.log(aki.frontaddr, aki.uid)
   } catch (error) {
     console.log('startAkinatorError', error)
   }
